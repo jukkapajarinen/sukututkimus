@@ -6,6 +6,8 @@ Pajarisen suvun tietoja löytyy Taipaleen Ortodoksisen Seurakunnan arkistoista.
 
 Vapaasti saatavilla löytyneitä kirjoja oli 70 kpl. (14.01.2026)
 
+Kirjojen nimet ovat aineistoId:eitä kuten ne ovat astia.narc.fi:ssä.
+
 - I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298418760
 - I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298423532
 - I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298426219
