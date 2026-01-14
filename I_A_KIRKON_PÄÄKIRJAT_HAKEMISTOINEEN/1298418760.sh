@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+mkdir -p 1298418760_tmp;
+cd 1298418760_tmp || exit 1;
+
 curl -o '1.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171009609&aineistoId=1298418760';
 curl -o '2.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171009612&aineistoId=1298418760';
 curl -o '3.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171009615&aineistoId=1298418760';
@@ -428,3 +433,7 @@ curl -o '427.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171010
 curl -o '428.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171010890&aineistoId=1298418760';
 curl -o '429.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171010893&aineistoId=1298418760';
 curl -o '430.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171010896&aineistoId=1298418760';
+
+img2pdf $(ls -1 *.jpg | sort -V) -o "../1298418760.pdf";
+cd ..;
+rm -rf 1298418760_tmp;
