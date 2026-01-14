@@ -1,40 +1,40 @@
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378683&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378690&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378696&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378703&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378710&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378716&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378722&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378728&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378734&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378740&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378746&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378752&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378759&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378765&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378771&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378777&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378783&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378789&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378795&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378801&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378807&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378813&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378819&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378825&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378831&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378837&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378843&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378849&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378855&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378861&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378868&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378873&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378879&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378885&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378891&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378897&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378903&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378909&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378914&aineistoId=1298506242
-https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378920&aineistoId=1298506242
+curl -o '1.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378683&aineistoId=1298506242';
+curl -o '2.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378690&aineistoId=1298506242';
+curl -o '3.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378696&aineistoId=1298506242';
+curl -o '4.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378703&aineistoId=1298506242';
+curl -o '5.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378710&aineistoId=1298506242';
+curl -o '6.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378716&aineistoId=1298506242';
+curl -o '7.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378722&aineistoId=1298506242';
+curl -o '8.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378728&aineistoId=1298506242';
+curl -o '9.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378734&aineistoId=1298506242';
+curl -o '10.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378740&aineistoId=1298506242';
+curl -o '11.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378746&aineistoId=1298506242';
+curl -o '12.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378752&aineistoId=1298506242';
+curl -o '13.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378759&aineistoId=1298506242';
+curl -o '14.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378765&aineistoId=1298506242';
+curl -o '15.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378771&aineistoId=1298506242';
+curl -o '16.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378777&aineistoId=1298506242';
+curl -o '17.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378783&aineistoId=1298506242';
+curl -o '18.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378789&aineistoId=1298506242';
+curl -o '19.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378795&aineistoId=1298506242';
+curl -o '20.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378801&aineistoId=1298506242';
+curl -o '21.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378807&aineistoId=1298506242';
+curl -o '22.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378813&aineistoId=1298506242';
+curl -o '23.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378819&aineistoId=1298506242';
+curl -o '24.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378825&aineistoId=1298506242';
+curl -o '25.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378831&aineistoId=1298506242';
+curl -o '26.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378837&aineistoId=1298506242';
+curl -o '27.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378843&aineistoId=1298506242';
+curl -o '28.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378849&aineistoId=1298506242';
+curl -o '29.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378855&aineistoId=1298506242';
+curl -o '30.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378861&aineistoId=1298506242';
+curl -o '31.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378868&aineistoId=1298506242';
+curl -o '32.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378873&aineistoId=1298506242';
+curl -o '33.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378879&aineistoId=1298506242';
+curl -o '34.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378885&aineistoId=1298506242';
+curl -o '35.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378891&aineistoId=1298506242';
+curl -o '36.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378897&aineistoId=1298506242';
+curl -o '37.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378903&aineistoId=1298506242';
+curl -o '38.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378909&aineistoId=1298506242';
+curl -o '39.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378914&aineistoId=1298506242';
+curl -o '40.jpg' 'https://astia.narc.fi/uusiastia/ws/getFile.php?fileId=9171378920&aineistoId=1298506242';
