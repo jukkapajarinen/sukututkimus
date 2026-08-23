@@ -25,7 +25,7 @@ Rules:
 - Preserve line breaks and the reading order of entries as closely as possible.
 - Pay close attention to personal names, place names, dates, and numbers - this is genealogical record data and accuracy on these matters most.
 - If a word or number is uncertain, give your best reading followed by [?]. If a word is entirely illegible, write [illegible].
-- Before the transcription of each PDF page, output a heading line "[PDF sivu <numero>]", where <numero> is that page's number in the uploaded PDF file (starting at 1). Output this heading even for a two-page spread (one heading for the spread's page number) and even for a page you are skipping because it only contains the archival reference card.
+- Before the transcription of each PDF page, output a heading line "[Sivu <numero>]", where <numero> is that page's number in the uploaded PDF file (starting at 1). Output this heading even for a two-page spread (one heading for the spread's page number) and even for a page you are skipping because it only contains the archival reference card.
 - Output only the transcription itself - no summary, no translation, no commentary, no markdown formatting.`;
 
 const pdfPath = process.argv[2];
