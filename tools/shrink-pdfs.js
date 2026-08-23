@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Creates smaller, web-upload-friendly copies of the scanned PDFs in books/,
-// for manual upload to the Gemini web app. Downsamples images to 150dpi and
+// for manual upload to an AI chat web app. Downsamples images to 150dpi and
 // recompresses as JPEG using Ghostscript. Books longer than PAGES_PER_PART
 // are split into multiple part files, since even compressed a 900-page book
 // is still too large to upload as one file.
