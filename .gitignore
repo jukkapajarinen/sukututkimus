@@ -1,3 +1,6 @@
 *.pdf
 !books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/1298471217.pdf
 !books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/7824655331.pdf
+
+# rendered page images from transcribe/ (regenerable from the PDFs, large binaries)
+*-transcript/*.png
