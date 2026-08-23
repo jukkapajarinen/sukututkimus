@@ -37,93 +37,97 @@
 <footer class="border-t border-yellow-200 mt-8">
   <div class="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
     Tehnyt <a href="https://www.jukkapajarinen.com" class="text-yellow-800 underline hover:text-yellow-900" target="_blank" rel="noopener">Jukka Pajarinen</a>
+    &middot; <a href="https://github.com/jukkapajarinen/sukututkimus" class="text-yellow-800 underline hover:text-yellow-900" target="_blank" rel="noopener">GitHub</a>
   </div>
 </footer>
 
 <script>
 // Every archive item known from sources/*.sh, grouped by series (books/ subfolder).
-// transcribed:true means the "<id>-gpt.txt" file exists in books/<category>/ and can be opened.
+// hasGpt/hasGemini mean the "<id>-gpt.txt" / "<id>-gemini.txt" file exists in
+// books/<category>/ and can be opened.
 var BOOKS = [
-  { id: "1298418760", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298418760-gpt.txt" },
-  { id: "1298423532", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298423532-gpt.txt" },
-  { id: "1298426219", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298426219-gpt.txt" },
-  { id: "1298427031", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298427031-gpt.txt" },
-  { id: "1298428816", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298428816-gpt.txt" },
-  { id: "1298432855", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298432855-gpt.txt" },
-  { id: "1298434878", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298434878-gpt.txt" },
-  { id: "1298435340", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435340-gpt.txt" },
-  { id: "1298435768", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435768-gpt.txt" },
-  { id: "1298437915", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298437915-gpt.txt" },
-  { id: "1298440686", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298440686-gpt.txt" },
-  { id: "1298442658", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298442658-gpt.txt" },
-  { id: "1298443087", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443087-gpt.txt" },
-  { id: "1298443478", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443478-gpt.txt" },
-  { id: "1298444585", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298444585-gpt.txt" },
-  { id: "1298447293", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298447293-gpt.txt" },
-  { id: "1298450036", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298450036-gpt.txt" },
-  { id: "1298452046", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452046-gpt.txt" },
-  { id: "1298452505", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452505-gpt.txt" },
-  { id: "1298454002", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298454002-gpt.txt" },
-  { id: "1298456595", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298456595-gpt.txt" },
-  { id: "1298457121", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457121-gpt.txt" },
-  { id: "1298457534", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457534-gpt.txt" },
-  { id: "1298460693", category: "I A – Kirkon pääkirjat hakemistoineen", transcribed: false, file: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298460693-gpt.txt" },
-  { id: "1298471217", category: "I B – Muuttaneiden luettelot (1878-1919)", transcribed: true, file: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/1298471217-gpt.txt" },
-  { id: "7824655331", category: "I B – Muuttaneiden luettelot (1878-1919)", transcribed: true, file: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/7824655331-gpt.txt" },
-  { id: "1298472385", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298472385-gpt.txt" },
-  { id: "1298475873", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298475873-gpt.txt" },
-  { id: "1298478212", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298478212-gpt.txt" },
-  { id: "1298478583", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298478583-gpt.txt" },
-  { id: "1298478768", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298478768-gpt.txt" },
-  { id: "1298481127", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298481127-gpt.txt" },
-  { id: "1298484476", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298484476-gpt.txt" },
-  { id: "1298484834", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298484834-gpt.txt" },
-  { id: "1298484974", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298484974-gpt.txt" },
-  { id: "1298485278", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298485278-gpt.txt" },
-  { id: "1298487788", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298487788-gpt.txt" },
-  { id: "1298491010", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298491010-gpt.txt" },
-  { id: "1298491460", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298491460-gpt.txt" },
-  { id: "1298491658", category: "I C – Metrikat (1806-1919)", transcribed: false, file: "books/I_C_METRIKAT_(1806-1919)/1298491658-gpt.txt" },
-  { id: "1298491934", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298491934-gpt.txt" },
-  { id: "1298493255", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298493255-gpt.txt" },
-  { id: "1298495906", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298495906-gpt.txt" },
-  { id: "1298498187", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498187-gpt.txt" },
-  { id: "1298498351", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498351-gpt.txt" },
-  { id: "1298500098", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298500098-gpt.txt" },
-  { id: "1298501077", category: "I E – Kuulutettujen ja vihittyjen luettelot", transcribed: false, file: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298501077-gpt.txt" },
-  { id: "1298501338", category: "I H – Muut luettelot", transcribed: false, file: "books/I_H_MUUT_LUETTELOT/1298501338-gpt.txt" },
-  { id: "1298503012", category: "I H – Muut luettelot", transcribed: false, file: "books/I_H_MUUT_LUETTELOT/1298503012-gpt.txt" },
-  { id: "1298506242", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506242-gpt.txt" },
-  { id: "1298506534", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506534-gpt.txt" },
-  { id: "1298506839", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506839-gpt.txt" },
-  { id: "1298507524", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298507524-gpt.txt" },
-  { id: "1298511658", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298511658-gpt.txt" },
-  { id: "1298515485", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298515485-gpt.txt" },
-  { id: "1298516150", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516150-gpt.txt" },
-  { id: "1298516808", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516808-gpt.txt" },
-  { id: "1298517270", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298517270-gpt.txt" },
-  { id: "1298521299", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298521299-gpt.txt" },
-  { id: "1298523602", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298523602-gpt.txt" },
-  { id: "1298525073", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525073-gpt.txt" },
-  { id: "1298525518", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525518-gpt.txt" },
-  { id: "1298525996", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525996-gpt.txt" },
-  { id: "1298527196", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298527196-gpt.txt" },
-  { id: "1298529901", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298529901-gpt.txt" },
-  { id: "1298533727", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298533727-gpt.txt" },
-  { id: "1298535933", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298535933-gpt.txt" },
-  { id: "1298536563", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536563-gpt.txt" },
-  { id: "1298536964", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536964-gpt.txt" },
-  { id: "1298537433", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", transcribed: false, file: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298537433-gpt.txt" }
+  { id: "1298418760", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298418760-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298418760-gemini.txt" },
+  { id: "1298423532", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298423532-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298423532-gemini.txt" },
+  { id: "1298426219", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298426219-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298426219-gemini.txt" },
+  { id: "1298427031", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298427031-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298427031-gemini.txt" },
+  { id: "1298428816", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298428816-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298428816-gemini.txt" },
+  { id: "1298432855", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298432855-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298432855-gemini.txt" },
+  { id: "1298434878", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298434878-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298434878-gemini.txt" },
+  { id: "1298435340", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435340-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435340-gemini.txt" },
+  { id: "1298435768", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435768-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435768-gemini.txt" },
+  { id: "1298437915", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298437915-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298437915-gemini.txt" },
+  { id: "1298440686", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298440686-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298440686-gemini.txt" },
+  { id: "1298442658", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298442658-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298442658-gemini.txt" },
+  { id: "1298443087", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443087-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443087-gemini.txt" },
+  { id: "1298443478", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443478-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443478-gemini.txt" },
+  { id: "1298444585", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298444585-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298444585-gemini.txt" },
+  { id: "1298447293", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298447293-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298447293-gemini.txt" },
+  { id: "1298450036", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298450036-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298450036-gemini.txt" },
+  { id: "1298452046", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452046-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452046-gemini.txt" },
+  { id: "1298452505", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452505-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452505-gemini.txt" },
+  { id: "1298454002", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298454002-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298454002-gemini.txt" },
+  { id: "1298456595", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298456595-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298456595-gemini.txt" },
+  { id: "1298457121", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457121-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457121-gemini.txt" },
+  { id: "1298457534", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457534-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457534-gemini.txt" },
+  { id: "1298460693", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298460693-gpt.txt", hasGemini: false, fileGemini: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298460693-gemini.txt" },
+  { id: "1298471217", category: "I B – Muuttaneiden luettelot (1878-1919)", hasGpt: true, fileGpt: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/1298471217-gpt.txt", hasGemini: false, fileGemini: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/1298471217-gemini.txt" },
+  { id: "7824655331", category: "I B – Muuttaneiden luettelot (1878-1919)", hasGpt: true, fileGpt: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/7824655331-gpt.txt", hasGemini: false, fileGemini: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/7824655331-gemini.txt" },
+  { id: "1298472385", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298472385-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298472385-gemini.txt" },
+  { id: "1298475873", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298475873-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298475873-gemini.txt" },
+  { id: "1298478212", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298478212-gpt.txt", hasGemini: true, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298478212-gemini.txt" },
+  { id: "1298478583", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298478583-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298478583-gemini.txt" },
+  { id: "1298478768", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298478768-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298478768-gemini.txt" },
+  { id: "1298481127", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298481127-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298481127-gemini.txt" },
+  { id: "1298484476", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298484476-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298484476-gemini.txt" },
+  { id: "1298484834", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298484834-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298484834-gemini.txt" },
+  { id: "1298484974", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298484974-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298484974-gemini.txt" },
+  { id: "1298485278", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298485278-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298485278-gemini.txt" },
+  { id: "1298487788", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298487788-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298487788-gemini.txt" },
+  { id: "1298491010", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298491010-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298491010-gemini.txt" },
+  { id: "1298491460", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298491460-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298491460-gemini.txt" },
+  { id: "1298491658", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298491658-gpt.txt", hasGemini: false, fileGemini: "books/I_C_METRIKAT_(1806-1919)/1298491658-gemini.txt" },
+  { id: "1298491934", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298491934-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298491934-gemini.txt" },
+  { id: "1298493255", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298493255-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298493255-gemini.txt" },
+  { id: "1298495906", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298495906-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298495906-gemini.txt" },
+  { id: "1298498187", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498187-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498187-gemini.txt" },
+  { id: "1298498351", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498351-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498351-gemini.txt" },
+  { id: "1298500098", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298500098-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298500098-gemini.txt" },
+  { id: "1298501077", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298501077-gpt.txt", hasGemini: false, fileGemini: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298501077-gemini.txt" },
+  { id: "1298501338", category: "I H – Muut luettelot", hasGpt: false, fileGpt: "books/I_H_MUUT_LUETTELOT/1298501338-gpt.txt", hasGemini: false, fileGemini: "books/I_H_MUUT_LUETTELOT/1298501338-gemini.txt" },
+  { id: "1298503012", category: "I H – Muut luettelot", hasGpt: false, fileGpt: "books/I_H_MUUT_LUETTELOT/1298503012-gpt.txt", hasGemini: false, fileGemini: "books/I_H_MUUT_LUETTELOT/1298503012-gemini.txt" },
+  { id: "1298506242", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506242-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506242-gemini.txt" },
+  { id: "1298506534", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506534-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506534-gemini.txt" },
+  { id: "1298506839", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506839-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506839-gemini.txt" },
+  { id: "1298507524", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298507524-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298507524-gemini.txt" },
+  { id: "1298511658", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298511658-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298511658-gemini.txt" },
+  { id: "1298515485", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298515485-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298515485-gemini.txt" },
+  { id: "1298516150", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516150-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516150-gemini.txt" },
+  { id: "1298516808", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516808-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516808-gemini.txt" },
+  { id: "1298517270", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298517270-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298517270-gemini.txt" },
+  { id: "1298521299", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298521299-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298521299-gemini.txt" },
+  { id: "1298523602", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298523602-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298523602-gemini.txt" },
+  { id: "1298525073", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525073-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525073-gemini.txt" },
+  { id: "1298525518", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525518-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525518-gemini.txt" },
+  { id: "1298525996", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525996-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525996-gemini.txt" },
+  { id: "1298527196", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298527196-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298527196-gemini.txt" },
+  { id: "1298529901", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298529901-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298529901-gemini.txt" },
+  { id: "1298533727", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298533727-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298533727-gemini.txt" },
+  { id: "1298535933", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298535933-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298535933-gemini.txt" },
+  { id: "1298536563", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536563-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536563-gemini.txt" },
+  { id: "1298536964", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536964-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536964-gemini.txt" },
+  { id: "1298537433", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298537433-gpt.txt", hasGemini: false, fileGemini: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298537433-gemini.txt" }
 ];
 
 var output = document.getElementById("output");
+var SOURCES = { gpt: { label: "GPT", field: "textGpt" }, gemini: { label: "Gemini", field: "textGemini" } };
 
-// only fetch text for books that are actually transcribed
-Promise.all(BOOKS.filter(function (b) { return b.transcribed; }).map(function (b) {
-  return fetch(b.file).then(function (r) { return r.text(); }).then(function (text) {
-    b.text = text;
-  });
-})).then(showList);
+// only fetch text for sources that actually exist
+var fetches = [];
+BOOKS.forEach(function (b) {
+  if (b.hasGpt) fetches.push(fetch(b.fileGpt).then(function (r) { return r.text(); }).then(function (text) { b.textGpt = text; }));
+  if (b.hasGemini) fetches.push(fetch(b.fileGemini).then(function (r) { return r.text(); }).then(function (text) { b.textGemini = text; }));
+});
+Promise.all(fetches).then(showList);
 
 function showList() {
   var html = "";
@@ -133,11 +137,19 @@ function showList() {
       html += "<h2 class='font-serif font-semibold text-yellow-900 mt-6 mb-2'>" + b.category + "</h2>";
       lastCategory = b.category;
     }
-    if (b.transcribed) {
-      html += "<a href='#' onclick='showBook(\"" + b.id + "\");return false' " +
-        "class='flex items-center justify-between bg-white border border-yellow-200 rounded px-4 py-2 mb-1 text-yellow-900 hover:border-yellow-400 hover:shadow transition'>" +
+    if (b.hasGpt || b.hasGemini) {
+      var links = "";
+      if (b.hasGpt) {
+        links += "<a href='#' onclick='showBook(\"" + b.id + "\", \"gpt\");return false' " +
+          "class='text-xs uppercase tracking-wide text-green-700 underline hover:text-green-900'>GPT</a>";
+      }
+      if (b.hasGemini) {
+        links += "<a href='#' onclick='showBook(\"" + b.id + "\", \"gemini\");return false' " +
+          "class='text-xs uppercase tracking-wide text-blue-700 underline hover:text-blue-900'>Gemini</a>";
+      }
+      html += "<div class='flex items-center justify-between bg-white border border-yellow-200 rounded px-4 py-2 mb-1 text-yellow-900'>" +
         "<span>" + b.id + "</span>" +
-        "<span class='text-xs uppercase tracking-wide text-green-700'>transkriboitu</span></a>";
+        "<span class='space-x-3'>" + links + "</span></div>";
     } else {
       html += "<div class='flex items-center justify-between bg-yellow-50 border border-dashed border-yellow-200 rounded px-4 py-2 mb-1 text-gray-400'>" +
         "<span>" + b.id + "</span>" +
@@ -147,11 +159,12 @@ function showList() {
   output.innerHTML = html;
 }
 
-function showBook(id, lineIndex) {
+function showBook(id, source, lineIndex) {
   var b = BOOKS.find(function (x) { return x.id === id; });
-  if (!b || !b.transcribed) return;
+  var src = SOURCES[source];
+  if (!b || !src || !b[src.field]) return;
 
-  var lines = b.text.split("\n");
+  var lines = b[src.field].split("\n");
   var body = lines.map(function (l, i) {
     var escaped = escapeHtml(l);
     return i === lineIndex ? "<mark id='hit'>" + escaped + "</mark>" : escaped;
@@ -159,7 +172,7 @@ function showBook(id, lineIndex) {
 
   output.innerHTML =
     "<p class='mb-3'><a href='#' onclick='showList();return false' class='text-yellow-800 underline'>&larr; takaisin</a></p>" +
-    "<h2 class='text-xl font-serif font-semibold mb-2 text-yellow-900'>" + b.id + "</h2>" +
+    "<h2 class='text-xl font-serif font-semibold mb-2 text-yellow-900'>" + b.id + " &middot; " + src.label + "</h2>" +
     "<p class='text-sm text-gray-500 mb-2'>" + b.category + "</p>" +
     "<pre class='bg-white border border-yellow-200 rounded p-4 text-sm'>" + body + "</pre>";
 
@@ -187,21 +200,25 @@ function fuzzy(query, text) {
 function search(query) {
   if (!query) { showList(); return; }
   var html = "";
-  BOOKS.filter(function (b) { return b.transcribed; }).forEach(function (b) {
-    var allLines = b.text.split("\n");
-    var hits = [];
-    allLines.forEach(function (l, i) {
-      if (l.trim() && fuzzy(query, l)) hits.push(i);
-    });
-    if (hits.length) {
-      html += "<h3 class='font-serif font-semibold mt-4 text-yellow-900'>" + b.id + " &middot; " + b.category + "</h3><ul class='space-y-1'>";
-      hits.forEach(function (i) {
-        html += "<li><a href='#' onclick='showBook(\"" + b.id + "\", " + i + ");return false' " +
-          "class='block bg-white border border-yellow-200 rounded px-3 py-1 text-sm text-gray-800 hover:border-yellow-400 hover:shadow transition'>" +
-          escapeHtml(allLines[i]) + "</a></li>";
+  BOOKS.forEach(function (b) {
+    Object.keys(SOURCES).forEach(function (source) {
+      var src = SOURCES[source];
+      if (!b[src.field]) return;
+      var allLines = b[src.field].split("\n");
+      var hits = [];
+      allLines.forEach(function (l, i) {
+        if (l.trim() && fuzzy(query, l)) hits.push(i);
       });
-      html += "</ul>";
-    }
+      if (hits.length) {
+        html += "<h3 class='font-serif font-semibold mt-4 text-yellow-900'>" + b.id + " &middot; " + b.category + " &middot; " + src.label + "</h3><ul class='space-y-1'>";
+        hits.forEach(function (i) {
+          html += "<li><a href='#' onclick='showBook(\"" + b.id + "\", \"" + source + "\", " + i + ");return false' " +
+            "class='block bg-white border border-yellow-200 rounded px-3 py-1 text-sm text-gray-800 hover:border-yellow-400 hover:shadow transition'>" +
+            escapeHtml(allLines[i]) + "</a></li>";
+        });
+        html += "</ul>";
+      }
+    });
   });
   output.innerHTML = html || "<p class='text-gray-500'>Ei osumia.</p>";
 }
