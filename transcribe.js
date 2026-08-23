@@ -1,13 +1,16 @@
 #!/usr/bin/env node
-// Transcribes a scanned church-book PDF (handwritten Finnish/Russian) using a
-// local Ollama vision model.
+// Transcribes a scanned church-book PDF (handwritten Finnish/Russian) using
+// the OpenAI API (ChatGPT). The whole PDF is uploaded and transcribed in one
+// call - OpenAI extracts page images from the PDF itself.
 //
-// Usage: node transcribe.js <pdf-file>
-// Output goes to "<pdf-file>-transcript/page-NNN.{png,md}" next to the PDF.
+// Usage: OPENAI_API_KEY=sk-... node transcribe.js <pdf-file>
+// Output goes to "<pdf-file>-gpt.txt" next to the PDF.
 
-const { execFileSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
+
+// Cheaper alternatives: "gpt-5.6-terra" (balanced), "gpt-5.6-luna" (cheapest).
+const MODEL = "gpt-5.6";
 
 const PROMPT = `You are transcribing a scan from a 19th-20th century Finnish Orthodox parish register ("kirkonkirja" / church book).
 
@@ -22,6 +25,7 @@ Rules:
 - Preserve line breaks and the reading order of entries as closely as possible.
 - Pay close attention to personal names, place names, dates, and numbers - this is genealogical record data and accuracy on these matters most.
 - If a word or number is uncertain, give your best reading followed by [?]. If a word is entirely illegible, write [illegible].
+- Before the transcription of each PDF page, output a heading line "[PDF sivu <numero>]", where <numero> is that page's number in the uploaded PDF file (starting at 1). Output this heading even for a two-page spread (one heading for the spread's page number) and even for a page you are skipping because it only contains the archival reference card.
 - Output only the transcription itself - no summary, no translation, no commentary, no markdown formatting.`;
 
 const pdfPath = process.argv[2];
@@ -30,58 +34,65 @@ if (!pdfPath) {
   process.exit(1);
 }
 
+const apiKey = process.env.OPENAI_API_KEY;
+if (!apiKey) {
+  console.error("Set OPENAI_API_KEY in the environment.");
+  process.exit(1);
+}
+
 async function main() {
-  const outDir = `${pdfPath.replace(/\.pdf$/i, "")}-transcript`;
-  fs.mkdirSync(outDir, { recursive: true });
+  const outPath = `${pdfPath.replace(/\.pdf$/i, "")}-gpt.txt`;
+  if (fs.existsSync(outPath)) {
+    console.log(`${outPath}: already done, skipping`);
+    return;
+  }
 
-  execFileSync("pdftoppm", ["-r", "80", "-png", pdfPath, path.join(outDir, "page")]);
-  const pages = fs.readdirSync(outDir).filter((f) => f.endsWith(".png")).sort();
+  console.log(`Uploading ${pdfPath}...`);
+  const form = new FormData();
+  form.append("purpose", "user_data");
+  form.append("file", new Blob([fs.readFileSync(pdfPath)]), path.basename(pdfPath));
 
-  for (const [i, file] of pages.entries()) {
-    const mdPath = path.join(outDir, file.replace(/\.png$/, ".md"));
-    const label = `${file} (${i + 1}/${pages.length})`;
+  const uploadRes = await fetch("https://api.openai.com/v1/files", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}` },
+    body: form,
+  });
+  if (!uploadRes.ok) throw new Error(`File upload failed ${uploadRes.status}: ${await uploadRes.text()}`);
+  const { id: fileId } = await uploadRes.json();
 
-    if (fs.existsSync(mdPath)) {
-      console.log(`${label}: already done, skipping`);
-      continue;
-    }
-
-    console.log(`${label}: transcribing...`);
+  try {
+    console.log(`Transcribing with ${MODEL}...`);
     const start = Date.now();
 
-    const res = await fetch("http://127.0.0.1:11434/api/chat", {
+    const res = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
       body: JSON.stringify({
-        model: "qwen2.5vl:3b",
-        messages: [
-          { role: "user", content: PROMPT, images: [fs.readFileSync(path.join(outDir, file)).toString("base64")] },
+        model: MODEL,
+        input: [
+          {
+            role: "user",
+            content: [
+              { type: "input_file", file_id: fileId },
+              { type: "input_text", text: PROMPT },
+            ],
+          },
         ],
-        stream: true,
-        options: { num_ctx: 8192, num_gpu: 0 },
       }),
     });
-    if (!res.ok) throw new Error(`Ollama returned ${res.status}: ${await res.text()}`);
+    if (!res.ok) throw new Error(`Responses API failed ${res.status}: ${await res.text()}`);
+    const data = await res.json();
 
-    // Streamed rather than one big reply
-    const decoder = new TextDecoder();
-    let buffer = "";
-    let text = "";
-    streamLoop: for await (const chunk of res.body) {
-      buffer += decoder.decode(chunk, { stream: true });
-      let j;
-      while ((j = buffer.indexOf("\n")) !== -1) {
-        const line = buffer.slice(0, j).trim();
-        buffer = buffer.slice(j + 1);
-        if (!line) continue;
-        const data = JSON.parse(line);
-        text += data.message?.content ?? "";
-        if (data.done) break streamLoop;
-      }
-    }
-
-    fs.writeFileSync(mdPath, text.trim() + "\n");
-    console.log(`${label}: done (${((Date.now() - start) / 1000).toFixed(0)}s)`);
+    fs.writeFileSync(outPath, data.output_text.trim() + "\n");
+    console.log(`Done (${((Date.now() - start) / 1000).toFixed(0)}s) -> ${outPath}`);
+  } finally {
+    await fetch(`https://api.openai.com/v1/files/${fileId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${apiKey}` },
+    }).catch(() => {});
   }
 }
 
