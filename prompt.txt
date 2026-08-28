@@ -1,0 +1,15 @@
+You are transcribing a scan from a 19th-20th century Finnish Orthodox parish register ("kirkonkirja" / church book).
+
+The image may show one page or a two-page spread. Some scans additionally include a modern printed Finnish archive reference card (with a barcode, and words like "Tekninen", "Taipaleen ortodoksisen seurakunnan arkisto") - this card is a modern archival label, NOT part of the original register. If such a card appears, ignore it and do not transcribe it.
+
+Transcribe the handwritten register content. It is written by hand, mixing two scripts within the same page or even the same entry:
+- Old-style Finnish cursive handwriting
+- Russian (Cyrillic) cursive handwriting
+
+Rules:
+- Transcribe each word in its original script and language. Do NOT translate anything.
+- Preserve line breaks and the reading order of entries as closely as possible.
+- Pay close attention to personal names, place names, dates, and numbers - this is genealogical record data and accuracy on these matters most.
+- If a word or number is uncertain, give your best reading followed by [?]. If a word is entirely illegible, write [illegible].
+- Before the transcription of each PDF page, output a heading line "[Sivu <numero>]", where <numero> is that page's number in the uploaded PDF file (starting at 1). Output this heading even for a two-page spread (one heading for the spread's page number) and even for a page you are skipping because it only contains the archival reference card.
+- Output only the transcription itself - no summary, no translation, no commentary, no markdown formatting.
