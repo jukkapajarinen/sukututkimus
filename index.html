@@ -12,122 +12,92 @@
 </head>
 <body class="bg-yellow-50 text-gray-800 min-h-screen flex flex-col">
 
-<header class="bg-yellow-900 text-yellow-50 border-b-4 border-yellow-700">
-  <div class="max-w-4xl mx-auto px-4 py-6">
-    <h1 class="text-3xl font-serif font-bold">Sukututkimus</h1>
-    <p class="text-yellow-200 mt-1">Taipaleen ortodoksisen seurakunnan arkistokirjat</p>
+<header class="bg-yellow-900 text-yellow-50 border-b-4 border-yellow-600">
+  <div class="px-6 py-6 flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-serif font-bold"><a href="#" onclick="showList();return false" class="hover:text-yellow-200">Sukututkimus</a></h1>
+      <p class="text-yellow-200 mt-1">Taipaleen ortodoksisen seurakunnan arkistokirjat</p>
+    </div>
+    <input id="search" type="text" placeholder="Hae... (voit käyttää * jokerimerkkinä)"
+      class="w-full sm:w-80 border-2 border-yellow-400 rounded px-3 py-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      onkeyup="search(this.value)">
   </div>
 </header>
 
-<div class="max-w-4xl mx-auto p-4 w-full flex-1">
-
-  <p class="bg-yellow-100 border border-yellow-300 text-yellow-900 text-sm rounded px-3 py-2 mb-6">
-    Huom: tekstit on luettu käsinkirjoitetuista kirkonkirjoista koneellisesti (tekoälyllä),
-    ja ne saattavat sisältää virheitä.
-  </p>
-
-  <input id="search" type="text" placeholder="Hae... (sumea haku)"
-    class="w-full border border-yellow-300 rounded px-3 py-2 mb-6 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
-    onkeyup="search(this.value)">
+<div class="px-6 py-4 w-full flex-1">
 
   <div id="output">Ladataan...</div>
 
 </div>
 
-<footer class="border-t border-yellow-200 mt-8">
-  <div class="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
+<footer class="border-t-2 border-yellow-500 mt-8">
+  <div class="px-6 py-6 text-center text-sm text-gray-600">
     Tehnyt <a href="https://www.jukkapajarinen.com" class="text-yellow-800 underline hover:text-yellow-900" target="_blank" rel="noopener">Jukka Pajarinen</a>
     &middot; <a href="https://github.com/jukkapajarinen/sukututkimus" class="text-yellow-800 underline hover:text-yellow-900" target="_blank" rel="noopener">GitHub</a>
   </div>
 </footer>
 
 <script>
-// Every archive item known from sources/*.sh, grouped by series (books/ subfolder).
-// hasGpt means the "<id>-gpt.txt" file exists in books/<category>/ and can be opened.
-var BOOKS = [
-  { id: "1298418760", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298418760-gpt.txt" },
-  { id: "1298423532", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298423532-gpt.txt" },
-  { id: "1298426219", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298426219-gpt.txt" },
-  { id: "1298427031", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298427031-gpt.txt" },
-  { id: "1298428816", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298428816-gpt.txt" },
-  { id: "1298432855", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298432855-gpt.txt" },
-  { id: "1298434878", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298434878-gpt.txt" },
-  { id: "1298435340", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435340-gpt.txt" },
-  { id: "1298435768", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298435768-gpt.txt" },
-  { id: "1298437915", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298437915-gpt.txt" },
-  { id: "1298440686", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298440686-gpt.txt" },
-  { id: "1298442658", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298442658-gpt.txt" },
-  { id: "1298443087", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443087-gpt.txt" },
-  { id: "1298443478", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298443478-gpt.txt" },
-  { id: "1298444585", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298444585-gpt.txt" },
-  { id: "1298447293", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298447293-gpt.txt" },
-  { id: "1298450036", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298450036-gpt.txt" },
-  { id: "1298452046", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452046-gpt.txt" },
-  { id: "1298452505", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298452505-gpt.txt" },
-  { id: "1298454002", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298454002-gpt.txt" },
-  { id: "1298456595", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298456595-gpt.txt" },
-  { id: "1298457121", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457121-gpt.txt" },
-  { id: "1298457534", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298457534-gpt.txt" },
-  { id: "1298460693", category: "I A – Kirkon pääkirjat hakemistoineen", hasGpt: false, fileGpt: "books/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN/1298460693-gpt.txt" },
-  { id: "1298471217", category: "I B – Muuttaneiden luettelot (1878-1919)", hasGpt: true, fileGpt: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/1298471217-gpt.txt" },
-  { id: "7824655331", category: "I B – Muuttaneiden luettelot (1878-1919)", hasGpt: true, fileGpt: "books/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)/7824655331-gpt.txt" },
-  { id: "1298472385", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298472385-gpt.txt" },
-  { id: "1298475873", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298475873-gpt.txt" },
-  { id: "1298478212", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298478212-gpt.txt" },
-  { id: "1298478583", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298478583-gpt.txt" },
-  { id: "1298478768", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298478768-gpt.txt" },
-  { id: "1298481127", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298481127-gpt.txt" },
-  { id: "1298484476", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298484476-gpt.txt" },
-  { id: "1298484834", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298484834-gpt.txt" },
-  { id: "1298484974", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298484974-gpt.txt" },
-  { id: "1298485278", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298485278-gpt.txt" },
-  { id: "1298487788", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298487788-gpt.txt" },
-  { id: "1298491010", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298491010-gpt.txt" },
-  { id: "1298491460", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298491460-gpt.txt" },
-  { id: "1298491658", category: "I C – Metrikat (1806-1919)", hasGpt: false, fileGpt: "books/I_C_METRIKAT_(1806-1919)/1298491658-gpt.txt" },
-  { id: "1298491934", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298491934-gpt.txt" },
-  { id: "1298493255", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298493255-gpt.txt" },
-  { id: "1298495906", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298495906-gpt.txt" },
-  { id: "1298498187", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: true, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498187-gpt.txt" },
-  { id: "1298498351", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298498351-gpt.txt" },
-  { id: "1298500098", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298500098-gpt.txt" },
-  { id: "1298501077", category: "I E – Kuulutettujen ja vihittyjen luettelot", hasGpt: false, fileGpt: "books/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT/1298501077-gpt.txt" },
-  { id: "1298501338", category: "I H – Muut luettelot", hasGpt: false, fileGpt: "books/I_H_MUUT_LUETTELOT/1298501338-gpt.txt" },
-  { id: "1298503012", category: "I H – Muut luettelot", hasGpt: true, fileGpt: "books/I_H_MUUT_LUETTELOT/1298503012-gpt.txt" },
-  { id: "1298506242", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506242-gpt.txt" },
-  { id: "1298506534", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506534-gpt.txt" },
-  { id: "1298506839", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298506839-gpt.txt" },
-  { id: "1298507524", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298507524-gpt.txt" },
-  { id: "1298511658", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298511658-gpt.txt" },
-  { id: "1298515485", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298515485-gpt.txt" },
-  { id: "1298516150", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516150-gpt.txt" },
-  { id: "1298516808", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298516808-gpt.txt" },
-  { id: "1298517270", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298517270-gpt.txt" },
-  { id: "1298521299", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298521299-gpt.txt" },
-  { id: "1298523602", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298523602-gpt.txt" },
-  { id: "1298525073", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525073-gpt.txt" },
-  { id: "1298525518", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525518-gpt.txt" },
-  { id: "1298525996", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298525996-gpt.txt" },
-  { id: "1298527196", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298527196-gpt.txt" },
-  { id: "1298529901", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298529901-gpt.txt" },
-  { id: "1298533727", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298533727-gpt.txt" },
-  { id: "1298535933", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298535933-gpt.txt" },
-  { id: "1298536563", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536563-gpt.txt" },
-  { id: "1298536964", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298536964-gpt.txt" },
-  { id: "1298537433", category: "I J – Väestörekisteri-ilmoitukset (1809-1919)", hasGpt: false, fileGpt: "books/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)/1298537433-gpt.txt" }
-];
+// Static snapshot: no PDFs, no save/edit endpoints. Generated by build.php - edit that
+// script (or the live index.php) rather than this file, it gets overwritten on rebuild.
+var BOOKS = [{"id":"1298418760","category":"I A – Kirkon pääkirjat hakemistoineen","title":"Rippikirja 1827 (aukeamat 261-308)","pages":430,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298418760.json"},{"id":"1298423532","category":"I A – Kirkon pääkirjat hakemistoineen","title":"Rippikirja 1830 - 1837, 1841, 1864, 1880","pages":521,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298423532.json"},{"id":"1298426219","category":"I A – Kirkon pääkirjat hakemistoineen","title":"Rippikirja 1838 - 1840, 1842 - 1849","pages":570,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298426219.json"},{"id":"1298427031","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":640,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298427031.json"},{"id":"1298428816","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":722,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298428816.json"},{"id":"1298432855","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":908,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298432855.json"},{"id":"1298434878","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":134,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298434878.json"},{"id":"1298435340","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":136,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298435340.json"},{"id":"1298435768","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":134,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298435768.json"},{"id":"1298437915","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":144,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298437915.json"},{"id":"1298440686","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":144,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298440686.json"},{"id":"1298442658","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":136,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298442658.json"},{"id":"1298443087","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":159,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298443087.json"},{"id":"1298443478","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":725,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298443478.json"},{"id":"1298444585","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":585,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298444585.json"},{"id":"1298447293","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":672,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298447293.json"},{"id":"1298450036","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":451,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298450036.json"},{"id":"1298452046","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":81,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298452046.json"},{"id":"1298452505","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":337,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298452505.json"},{"id":"1298454002","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":626,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298454002.json"},{"id":"1298456595","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":246,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298456595.json"},{"id":"1298457121","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":363,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298457121.json"},{"id":"1298457534","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":321,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298457534.json"},{"id":"1298460693","category":"I A – Kirkon pääkirjat hakemistoineen","title":"","pages":362,"fileData":"books\/I_A_KIRKON_PÄÄKIRJAT_HAKEMISTOINEEN\/1298460693.json"},{"id":"1298471217","category":"I B – Muuttaneiden luettelot (1878-1919)","title":"Muuttokirjakuulutukset, alkaen v - lta 1897","pages":18,"fileData":"books\/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)\/1298471217.json"},{"id":"7824655331","category":"I B – Muuttaneiden luettelot (1878-1919)","title":"Muuttokirjakuulutukset 1906","pages":20,"fileData":"books\/I_B_MUUTTANEIDEN_LUETTELOT_(1878-1919)\/7824655331.json"},{"id":"1298472385","category":"I C – Metrikat (1806-1919)","title":"","pages":507,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298472385.json"},{"id":"1298475873","category":"I C – Metrikat (1806-1919)","title":"","pages":576,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298475873.json"},{"id":"1298478212","category":"I C – Metrikat (1806-1919)","title":"","pages":516,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298478212.json"},{"id":"1298478583","category":"I C – Metrikat (1806-1919)","title":"","pages":440,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298478583.json"},{"id":"1298478768","category":"I C – Metrikat (1806-1919)","title":"","pages":506,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298478768.json"},{"id":"1298481127","category":"I C – Metrikat (1806-1919)","title":"","pages":383,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298481127.json"},{"id":"1298484476","category":"I C – Metrikat (1806-1919)","title":"","pages":664,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298484476.json"},{"id":"1298484834","category":"I C – Metrikat (1806-1919)","title":"","pages":531,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298484834.json"},{"id":"1298484974","category":"I C – Metrikat (1806-1919)","title":"","pages":576,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298484974.json"},{"id":"1298485278","category":"I C – Metrikat (1806-1919)","title":"","pages":548,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298485278.json"},{"id":"1298487788","category":"I C – Metrikat (1806-1919)","title":"","pages":832,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298487788.json"},{"id":"1298491010","category":"I C – Metrikat (1806-1919)","title":"","pages":559,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298491010.json"},{"id":"1298491460","category":"I C – Metrikat (1806-1919)","title":"","pages":693,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298491460.json"},{"id":"1298491658","category":"I C – Metrikat (1806-1919)","title":"","pages":547,"fileData":"books\/I_C_METRIKAT_(1806-1919)\/1298491658.json"},{"id":"1298491934","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"","pages":73,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298491934.json"},{"id":"1298493255","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"","pages":71,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298493255.json"},{"id":"1298495906","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"","pages":65,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298495906.json"},{"id":"1298498187","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"Kuulutettujen luettelo 1888 - 1889","pages":25,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298498187.json"},{"id":"1298498351","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"","pages":110,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298498351.json"},{"id":"1298500098","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"","pages":182,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298500098.json"},{"id":"1298501077","category":"I E – Kuulutettujen ja vihittyjen luettelot","title":"","pages":178,"fileData":"books\/I_E_KUULUTETTUJEN_JA_VIHITTYJEN_LUETTELOT\/1298501077.json"},{"id":"1298501338","category":"I H – Muut luettelot","title":"","pages":203,"fileData":"books\/I_H_MUUT_LUETTELOT\/1298501338.json"},{"id":"1298503012","category":"I H – Muut luettelot","title":"Rokotusluettelo 1888","pages":8,"fileData":"books\/I_H_MUUT_LUETTELOT\/1298503012.json"},{"id":"1298506242","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":40,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298506242.json"},{"id":"1298506534","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":121,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298506534.json"},{"id":"1298506839","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":120,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298506839.json"},{"id":"1298507524","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":102,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298507524.json"},{"id":"1298511658","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":143,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298511658.json"},{"id":"1298515485","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":138,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298515485.json"},{"id":"1298516150","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":144,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298516150.json"},{"id":"1298516808","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":95,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298516808.json"},{"id":"1298517270","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":142,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298517270.json"},{"id":"1298521299","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":149,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298521299.json"},{"id":"1298523602","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":209,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298523602.json"},{"id":"1298525073","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":167,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298525073.json"},{"id":"1298525518","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":191,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298525518.json"},{"id":"1298525996","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":126,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298525996.json"},{"id":"1298527196","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":159,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298527196.json"},{"id":"1298529901","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":156,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298529901.json"},{"id":"1298533727","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":214,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298533727.json"},{"id":"1298535933","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":206,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298535933.json"},{"id":"1298536563","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":614,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298536563.json"},{"id":"1298536964","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":595,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298536964.json"},{"id":"1298537433","category":"I J – Väestörekisteri-ilmoitukset (1809-1919)","title":"","pages":579,"fileData":"books\/I_J_VÄESTÖREKISTERI-ILMOITUKSET_(1809-1919)\/1298537433.json"}];
 
 var output = document.getElementById("output");
-var SOURCES = { gpt: { label: "GPT", field: "textGpt" } };
+var SOURCES = {
+  mine: { label: "Oma", field: "textMine" },
+  gpt: { label: "GPT", field: "textGpt" },
+  digi: { label: "Digihakemisto", field: "textDigi" }
+};
+var viewMode = "list";
 
-// only fetch text for sources that actually exist
+// Each book's transcriptions live in one books/<dir>/<id>.json ({gpt, mine, digi});
+// a book with none of them yet has no file at all, so a 404 there is expected.
 var fetches = [];
 BOOKS.forEach(function (b) {
-  if (b.hasGpt) fetches.push(fetch(b.fileGpt).then(function (r) { return r.text(); }).then(function (text) { b.textGpt = text; }));
+  fetches.push(
+    fetch(b.fileData)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data) return;
+        if (data.gpt) b.textGpt = data.gpt;
+        if (data.mine) b.textMine = data.mine;
+        if (data.digi) b.textDigi = data.digi;
+      })
+      .catch(function () {})
+  );
 });
 Promise.all(fetches).then(showList);
 
+// Splits a transcript into { pageNumber: pageText } based on "[Sivu N]" headings.
+// Falls back to putting everything on page 1 if no headings are found.
+function pagesFromText(text) {
+  var map = {};
+  if (!text) return map;
+  var re = /\[Sivu\s+(\d+)\]/g;
+  var matches = [];
+  var m;
+  while ((m = re.exec(text))) matches.push({ num: parseInt(m[1], 10), start: m.index, end: re.lastIndex });
+  if (!matches.length) { map[1] = text; return map; }
+  matches.forEach(function (mm, i) {
+    var contentStart = mm.end;
+    var contentEnd = (i + 1 < matches.length) ? matches[i + 1].start : text.length;
+    map[mm.num] = text.slice(contentStart, contentEnd).replace(/^\s+/, "").replace(/\s+$/, "");
+  });
+  return map;
+}
+
+// "<id> — <custom title>"; titles are read-only here (set via index.php, not this static page).
+function titleSuffixHtml(b) {
+  return b.title ? " <span class='font-normal text-gray-600'>&mdash; " + escapeHtml(b.title) + "</span>" : "";
+}
+
+// The PDF's page count, as cached (via index.php) in the book's JSON.
+function pageCountSuffixHtml(b) {
+  return b.pages ? " <span class='font-normal text-sm text-green-700'>(" + b.pages + " sivua)</span>" : "";
+}
+
 function showList() {
+  viewMode = "list";
   var html = "";
   var lastCategory = null;
   BOOKS.forEach(function (b) {
@@ -135,60 +105,142 @@ function showList() {
       html += "<h2 class='font-serif font-semibold text-yellow-900 mt-6 mb-2'>" + b.category + "</h2>";
       lastCategory = b.category;
     }
-    if (b.hasGpt) {
-      var links = "";
-      if (b.hasGpt) {
-        links += "<a href='#' onclick='showBook(\"" + b.id + "\", \"gpt\");return false' " +
-          "class='text-xs uppercase tracking-wide text-green-700 underline hover:text-green-900'>GPT</a>";
-      }
-      html += "<div class='flex items-center justify-between bg-white border border-yellow-200 rounded px-4 py-2 mb-1 text-yellow-900'>" +
-        "<span>" + b.id + "</span>" +
-        "<span class='space-x-3'>" + links + "</span></div>";
-    } else {
-      html += "<div class='flex items-center justify-between bg-yellow-50 border border-dashed border-yellow-200 rounded px-4 py-2 mb-1 text-gray-400'>" +
-        "<span>" + b.id + "</span>" +
-        "<span class='text-xs uppercase tracking-wide'>ei transkriboitu</span></div>";
+    var links = "";
+    if (b.textGpt) {
+      links += "<a href='#' onclick='event.stopPropagation();showBookPage(\"" + b.id + "\", 1, \"gpt\", 0);return false' " +
+        "class='text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded border-2 border-green-500 text-green-800 bg-green-50 hover:bg-green-100'>GPT</a>";
     }
+    if (b.textMine) {
+      links += "<span class='ml-3 text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded border-2 border-blue-500 text-blue-800 bg-blue-50'>Jukka Pajarinen</span>";
+    }
+    if (b.textDigi) {
+      links += "<a href='#' onclick='event.stopPropagation();showBookPage(\"" + b.id + "\", 1, \"digi\", 0);return false' " +
+        "class='ml-3 text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded border-2 border-purple-500 text-purple-800 bg-purple-50 hover:bg-purple-100'>Digihakemisto</a>";
+    }
+    html += "<div onclick='showBookPage(\"" + b.id + "\", 1)' " +
+      "class='flex items-center justify-between bg-white border-2 border-yellow-400 rounded px-4 py-2 mb-1 text-yellow-900 cursor-pointer hover:bg-yellow-50'>" +
+      "<span>" + b.id + pageCountSuffixHtml(b) + titleSuffixHtml(b) + "</span>" +
+      "<span class='space-x-1'>" + links + "</span></div>";
   });
   output.innerHTML = html;
 }
 
-function showBook(id, source, lineIndex) {
+// Current page-viewer state.
+var current = { book: null, page: 1, pageCount: 1, gptPages: {}, minePages: {}, digiPages: {} };
+
+function showBookPage(id, page, focusSource, focusLineIndex) {
   var b = BOOKS.find(function (x) { return x.id === id; });
-  var src = SOURCES[source];
-  if (!b || !src || !b[src.field]) return;
+  if (!b) return;
 
-  var lines = b[src.field].split("\n");
-  var body = lines.map(function (l, i) {
-    var escaped = escapeHtml(l);
-    return i === lineIndex ? "<mark id='hit'>" + escaped + "</mark>" : escaped;
-  }).join("\n");
+  viewMode = "book";
+  current.book = b;
+  current.gptPages = pagesFromText(b.textGpt);
+  current.minePages = pagesFromText(b.textMine);
+  current.digiPages = pagesFromText(b.textDigi);
 
-  output.innerHTML =
+  var maxPage = 1;
+  [current.gptPages, current.minePages, current.digiPages].forEach(function (pages) {
+    Object.keys(pages).forEach(function (k) {
+      var n = parseInt(k, 10);
+      if (n > maxPage) maxPage = n;
+    });
+  });
+  current.pageCount = maxPage;
+  current.page = Math.min(page || 1, maxPage);
+
+  output.innerHTML = bookPageShell(b);
+  renderCurrentPage(focusSource, focusLineIndex);
+}
+
+function bookPageShell(b) {
+  return "" +
     "<p class='mb-3'><a href='#' onclick='showList();return false' class='text-yellow-800 underline'>&larr; takaisin</a></p>" +
-    "<h2 class='text-xl font-serif font-semibold mb-2 text-yellow-900'>" + b.id + " &middot; " + src.label + "</h2>" +
-    "<p class='text-sm text-gray-500 mb-2'>" + b.category + "</p>" +
-    "<pre class='bg-white border border-yellow-200 rounded p-4 text-sm'>" + body + "</pre>";
+    "<h2 class='text-xl font-serif font-semibold mb-1 text-yellow-900'>" + b.id + titleSuffixHtml(b) + "</h2>" +
+    "<p class='text-sm text-gray-600 mb-3'>" + b.category + "</p>" +
+    "<div class='flex flex-wrap items-center gap-2 mb-4 bg-white border-2 border-yellow-400 rounded px-3 py-2'>" +
+      "<button onclick='gotoPage(-1)' class='px-2 py-1 border-2 border-yellow-400 rounded hover:bg-yellow-50'>&larr; Edellinen</button>" +
+      "<span>Sivu <input id='pageInput' type='number' min='1' value='" + current.page + "' " +
+        "class='w-16 border-2 border-yellow-400 rounded px-1 text-center' onchange='gotoPageInput(this.value)'> / " +
+        "<span id='pageCount'>" + current.pageCount + "</span></span>" +
+      "<button onclick='gotoPage(1)' class='px-2 py-1 border-2 border-yellow-400 rounded hover:bg-yellow-50'>Seuraava &rarr;</button>" +
+    "</div>" +
+    "<div class='grid grid-cols-1 lg:grid-cols-3 gap-4'>" +
+      "<div>" +
+        "<h3 class='font-serif font-semibold text-blue-800 mb-1'>Oma transkriptio</h3>" +
+        "<pre id='mineText' class='w-full border-4 border-blue-400 rounded p-2 text-sm bg-blue-50 overflow-auto' style='height:60vh'></pre>" +
+      "</div>" +
+      "<div>" +
+        "<h3 class='font-serif font-semibold text-green-800 mb-1'>ChatGPT-transkriptio</h3>" +
+        "<pre id='gptText' class='w-full border-4 border-green-400 rounded p-2 text-sm bg-green-50 overflow-auto' style='height:60vh'></pre>" +
+      "</div>" +
+      "<div>" +
+        "<h3 class='font-serif font-semibold text-purple-800 mb-1'>Digihakemisto</h3>" +
+        "<pre id='digiText' class='w-full border-4 border-purple-400 rounded p-2 text-sm bg-purple-50 overflow-auto' style='height:60vh'></pre>" +
+      "</div>" +
+    "</div>";
+}
 
-  if (lineIndex !== undefined) {
+function renderCurrentPage(focusSource, focusLineIndex) {
+  var pageInput = document.getElementById("pageInput");
+  var pageCount = document.getElementById("pageCount");
+  if (pageInput) pageInput.value = current.page;
+  if (pageCount) pageCount.textContent = current.pageCount;
+
+  var page = current.page;
+  renderReadOnlyPane("mineText", current.minePages[page], "(ei omaa transkriptiota tälle sivulle)", focusSource === "mine", focusLineIndex);
+  renderReadOnlyPane("gptText", current.gptPages[page], "(ei ChatGPT-transkriptiota tälle sivulle)", focusSource === "gpt", focusLineIndex);
+  renderReadOnlyPane("digiText", current.digiPages[page], "(ei digihakemisto-tietoja tälle sivulle)", focusSource === "digi", focusLineIndex);
+}
+
+// Renders a read-only pane, highlighting one line when it's the search-jump target.
+function renderReadOnlyPane(elId, text, emptyMessage, isFocused, focusLineIndex) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  if (isFocused && focusLineIndex !== undefined && text !== undefined) {
+    var lines = text.split("\n");
+    el.innerHTML = lines.map(function (l, i) {
+      var esc = escapeHtml(l);
+      return i === focusLineIndex ? "<mark id='hit'>" + esc + "</mark>" : esc;
+    }).join("\n");
     var hit = document.getElementById("hit");
     if (hit) hit.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else {
+    el.textContent = text !== undefined ? text : emptyMessage;
   }
+}
+
+function gotoPage(delta) {
+  if (!current.book) return;
+  var next = current.page + delta;
+  if (next < 1) next = 1;
+  if (next > current.pageCount) next = current.pageCount;
+  current.page = next;
+  renderCurrentPage();
+}
+
+function gotoPageInput(value) {
+  if (!current.book) return;
+  var n = parseInt(value, 10);
+  if (isNaN(n) || n < 1) n = 1;
+  if (n > current.pageCount) n = current.pageCount;
+  current.page = n;
+  renderCurrentPage();
 }
 
 function escapeHtml(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// simple fuzzy match: letters of the query must appear in order (case-insensitive)
-function fuzzy(query, text) {
+// Plain substring match, case-insensitive. A "*" in the query means "any characters here",
+// e.g. "p*ari*" matches "pekka-ari-nen".
+function matchesQuery(query, text) {
   query = query.toLowerCase();
   text = text.toLowerCase();
-  var qi = 0;
-  for (var i = 0; i < text.length && qi < query.length; i++) {
-    if (text[i] === query[qi]) qi++;
-  }
-  return qi === query.length;
+  if (query.indexOf("*") === -1) return text.indexOf(query) !== -1;
+  var pattern = query.split("*").map(function (part) {
+    return part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }).join(".*");
+  return new RegExp(pattern).test(text);
 }
 
 function search(query) {
@@ -197,24 +249,28 @@ function search(query) {
   BOOKS.forEach(function (b) {
     Object.keys(SOURCES).forEach(function (source) {
       var src = SOURCES[source];
-      if (!b[src.field]) return;
-      var allLines = b[src.field].split("\n");
-      var hits = [];
-      allLines.forEach(function (l, i) {
-        if (l.trim() && fuzzy(query, l)) hits.push(i);
+      var text = b[src.field];
+      if (!text) return;
+      var pages = pagesFromText(text);
+      var pageNums = Object.keys(pages).map(Number).sort(function (a, c) { return a - c; });
+      var bookHits = [];
+      pageNums.forEach(function (pn) {
+        pages[pn].split("\n").forEach(function (l, i) {
+          if (l.trim() && matchesQuery(query, l)) bookHits.push({ page: pn, lineIndex: i, text: l });
+        });
       });
-      if (hits.length) {
+      if (bookHits.length) {
         html += "<h3 class='font-serif font-semibold mt-4 text-yellow-900'>" + b.id + " &middot; " + b.category + " &middot; " + src.label + "</h3><ul class='space-y-1'>";
-        hits.forEach(function (i) {
-          html += "<li><a href='#' onclick='showBook(\"" + b.id + "\", \"" + source + "\", " + i + ");return false' " +
-            "class='block bg-white border border-yellow-200 rounded px-3 py-1 text-sm text-gray-800 hover:border-yellow-400 hover:shadow transition'>" +
-            escapeHtml(allLines[i]) + "</a></li>";
+        bookHits.forEach(function (h) {
+          html += "<li><a href='#' onclick='showBookPage(\"" + b.id + "\", " + h.page + ", \"" + source + "\", " + h.lineIndex + ");return false' " +
+            "class='block bg-white border-2 border-yellow-400 rounded px-3 py-1 text-sm text-gray-900 hover:border-yellow-600 hover:shadow transition'>" +
+            "<span class='text-xs text-gray-700 mr-2'>s. " + h.page + "</span>" + escapeHtml(h.text) + "</a></li>";
         });
         html += "</ul>";
       }
     });
   });
-  output.innerHTML = html || "<p class='text-gray-500'>Ei osumia.</p>";
+  output.innerHTML = html || "<p class='text-gray-600'>Ei osumia.</p>";
 }
 </script>
 
